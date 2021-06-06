@@ -1,1 +1,1 @@
-https://matveyprupas.github.io/final_task_fd2/
+https://matveyprupas.github.io/final_task_fd2/wiring_diagram/
