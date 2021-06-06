@@ -70,6 +70,7 @@ body {
   text-align: center;
   vertical-align: middle;
   word-wrap: break-word;
+  transition: all ease-out 0.5s;
 }
 
 .aside table td img {
@@ -85,4 +86,6 @@ body {
   height: 300px;
   width: 100%;
   background-color: pink;
+  display: grid;
+  /* grid-template-columns: ; */
 }
