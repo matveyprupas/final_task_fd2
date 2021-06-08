@@ -30,7 +30,17 @@
                     <li><a href="#">Tools</a></li>
                     <li><a href="#">Help</a></li>
                 </ul>
+                <form class="format">
+                    <select name="diagram-format">
+                        <option value="A4_portrait">A4 portrait</option>
+                        <option value="A4_landscape">A4 landscape</option>
+                        <option value="A3_portrait">A3 portrait</option>
+                        <option value="A3_landscape">A3 landscape</option>
+                    </select>
+                    <input type="submit" name="" id="" value="Choose">
+                </form>
             </div>
+
         </div>
     </header>
     <main class="main">
@@ -52,9 +62,13 @@
             </table>
         </aside>
         <section class="workspace">
+            <div class="workspace__format">
+
+            </div>
         </section>
     </main>
     
     <script src="./scripts/script.js"></script>
+    <script src="./scripts/workspace.js"></script>
 </body>
 </html>

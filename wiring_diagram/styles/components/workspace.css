@@ -1,0 +1,15 @@
+.workspace {
+  height: 85vh;
+  width: 100%;
+  overflow: scroll;
+  background-color: pink;
+  /* display: grid; */
+  /* grid-template-columns: ; */
+}
+
+.workspace__format {
+  height: 297mm;
+  width: 210mm;
+  background-color: blue;
+  display: grid;
+}
