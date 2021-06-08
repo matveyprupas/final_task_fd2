@@ -1,0 +1,73 @@
+/* Header menu */
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.header .logo {
+  width: 64px;
+  height: 64px;
+  margin: 20px;
+}
+
+.header h1 {
+  font-size: 22px;
+}
+
+.header .main-menu {
+  display: flex;
+}
+.header .main-menu ul {
+  list-style-type: none;
+  display: flex;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+.header .main-menu li {
+  padding-right: 10px;
+}
+
+.header .main-menu li a {
+  color: #333;
+  text-decoration: none;
+}
+
+/* Aside menu */
+
+.aside {
+  height: 300px;
+  min-width: 150px;
+  width: 15%;
+  padding: 0 16px;
+}
+
+.aside table,
+.aside table tr,
+.aside table th,
+.aside table td {
+  table-layout: fixed;
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.aside table th {
+  height: 30px;
+}
+
+.aside table td {
+  text-align: center;
+  vertical-align: middle;
+  word-wrap: break-word;
+  transition: all ease-out 0.5s;
+}
+
+.aside table td img {
+  width: 32px;
+  height: 32px;
+}
+
+.aside table {
+  width: 100%;
+}

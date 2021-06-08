@@ -1,0 +1,54 @@
+.workspace {
+  /* height: 85vh; */
+  width: 100%;
+  overflow: scroll;
+  /* background-color: pink; */
+  position: relative;
+  /* display: grid; */
+  /* grid-template-columns: ; */
+}
+
+.workspace__format {
+  /* height: 297mm;
+  width: 210mm; */
+  background-color: pink;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 20px);
+  grid-template-rows: repeat(auto-fill, 20px);
+
+  grid-gap: 5px;
+  background-color: pink;
+
+  border: 1px solid black;
+  position: absolute;
+}
+
+.testTool,
+.testTool2 {
+  color: #fff;
+}
+.testTool {
+  background-color: black;
+  grid-column-start: 5;
+  grid-column-end: 7;
+  grid-row-start: 7;
+  grid-row-end: 9;
+}
+
+.testTool2 {
+  background-color: rgb(73, 73, 82);
+  grid-column-start: 7;
+  grid-column-end: 11;
+  grid-row-start: 7;
+  /* grid-row-end: 8; */
+}
+
+.zero__div {
+  height: 1px;
+}
+
+.testdiv {
+  width: 210mm;
+  height: 297mm;
+  background-color: red;
+}
