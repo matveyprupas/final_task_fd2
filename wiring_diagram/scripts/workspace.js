@@ -55,5 +55,39 @@ chooseFormat();
 
 
 
+//move workspace
+
+document.body.querySelector(".main").addEventListener("mousedown", (e)=>e.preventDefault());
+workspace.addEventListener("contextmenu", (e)=>e.preventDefault());
 
 
+workspaceFormat.addEventListener("mousedown", startMoveDOM);
+
+window.addEventListener("mouseup", stopMoveDOM);
+window.addEventListener("mouseout", stopMoveDOM);
+
+
+function startMoveDOM(e) {
+    e.preventDefault();
+    if (e.which === 2) {        
+        let shiftLeft = e.clientX - e.target.offsetLeft;
+        let shiftTop = e.clientY - e.target.offsetTop; 
+
+        console.log(e.target.offsetLeft, e.clientX);
+
+        e.target.onmousemove = function(e){
+            e.preventDefault();
+            e.target.style.cursor = "move";
+
+            e.target.style.left = (e.clientX - shiftLeft) + "px";
+            e.target.style.top = (e.clientY - shiftTop) + "px";
+        };
+    } 
+}
+
+function stopMoveDOM(e) {
+    e.preventDefault();
+    e.target.onmousemove = null;
+    e.target.style.cursor = "default";
+    target = null;
+}

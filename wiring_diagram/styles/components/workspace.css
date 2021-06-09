@@ -6,6 +6,7 @@
   position: relative;
   /* display: grid; */
   /* grid-template-columns: ; */
+  border: 1px #333 solid;
 }
 
 .workspace__format {
@@ -25,6 +26,7 @@
 
 .testTool,
 .testTool2 {
+  /* position: absolute; */
   color: #fff;
 }
 .testTool {
