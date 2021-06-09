@@ -73,7 +73,7 @@ function startMoveDOM(e) {
         let shiftLeft = e.clientX - e.target.offsetLeft;
         let shiftTop = e.clientY - e.target.offsetTop; 
 
-        console.log(e.target.offsetLeft, e.clientX);
+        // console.log(e.target.offsetLeft, e.clientX);
 
         e.target.onmousemove = function(e){
             e.preventDefault();
@@ -90,4 +90,25 @@ function stopMoveDOM(e) {
     e.target.onmousemove = null;
     e.target.style.cursor = "default";
     target = null;
+}
+
+
+
+
+// Scale workspace
+
+let scale = 1;
+workspace.addEventListener("wheel", (e)=>{
+    e.preventDefault();
+    scaleWorkspace(e, workspaceFormat);
+
+});
+
+function scaleWorkspace(e, target) {
+    if (e.wheelDelta > 0) {
+        scale += 0.05;
+    } else {
+        scale -= 0.05;
+    }
+    target.style.transform = `scale(${scale})`;
 }
