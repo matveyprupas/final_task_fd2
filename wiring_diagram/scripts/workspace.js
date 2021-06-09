@@ -57,40 +57,37 @@ chooseFormat();
 
 //move workspace
 
-
-
-
 document.body.querySelector(".main").addEventListener("mousedown", (e)=>e.preventDefault());
-
-workspace.addEventListener("mousedown", (e)=>{
-    e.preventDefault();
-    // console.log(e.which);
-    if (e.which === 2) {
-        moveDOM(e);
-    }
-});
-
-window.addEventListener("mouseup", (e)=>{
-    workspaceFormat.onmousemove = null;
-});
-
 workspace.addEventListener("contextmenu", (e)=>e.preventDefault());
 
-function moveDOM(e) {
-    let startLeft = e.target.offsetLeft;
-    let startTop = e.target.offsetTop;
-    
-    let shiftLeft = e.offsetX - e.target.offsetLeft;
-    let shiftTop = e.offsetY - e.target.offsetTop; 
 
-    console.log(shiftLeft, shiftTop);
+workspaceFormat.addEventListener("mousedown", startMoveDOM);
 
-    workspaceFormat.onmousemove = function(e){
-        // console.log(e.clientX - shiftLeft, e.clientY - shiftTop);
-        e.target.style.left = (e.offsetX - shiftLeft) + "px";
-        e.target.style.top = (e.offsetY - shiftTop) + "px";
-    };
+window.addEventListener("mouseup", stopMoveDOM);
+window.addEventListener("mouseout", stopMoveDOM);
 
-    // e.target.style.left = startLeft + 5 + "px";
-    // e.target.style.top = startTop + 5 + "px";
+
+function startMoveDOM(e) {
+    e.preventDefault();
+    if (e.which === 2) {        
+        let shiftLeft = e.clientX - e.target.offsetLeft;
+        let shiftTop = e.clientY - e.target.offsetTop; 
+
+        console.log(e.target.offsetLeft, e.clientX);
+
+        e.target.onmousemove = function(e){
+            e.preventDefault();
+            e.target.style.cursor = "move";
+
+            e.target.style.left = (e.clientX - shiftLeft) + "px";
+            e.target.style.top = (e.clientY - shiftTop) + "px";
+        };
+    } 
+}
+
+function stopMoveDOM(e) {
+    e.preventDefault();
+    e.target.onmousemove = null;
+    e.target.style.cursor = "default";
+    target = null;
 }

@@ -26,6 +26,7 @@
 
 .testTool,
 .testTool2 {
+  /* position: absolute; */
   color: #fff;
 }
 .testTool {
