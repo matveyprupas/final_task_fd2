@@ -55,5 +55,42 @@ chooseFormat();
 
 
 
+//move workspace
 
 
+
+
+document.body.querySelector(".main").addEventListener("mousedown", (e)=>e.preventDefault());
+
+workspace.addEventListener("mousedown", (e)=>{
+    e.preventDefault();
+    // console.log(e.which);
+    if (e.which === 2) {
+        moveDOM(e);
+    }
+});
+
+window.addEventListener("mouseup", (e)=>{
+    workspaceFormat.onmousemove = null;
+});
+
+workspace.addEventListener("contextmenu", (e)=>e.preventDefault());
+
+function moveDOM(e) {
+    let startLeft = e.target.offsetLeft;
+    let startTop = e.target.offsetTop;
+    
+    let shiftLeft = e.offsetX - e.target.offsetLeft;
+    let shiftTop = e.offsetY - e.target.offsetTop; 
+
+    console.log(shiftLeft, shiftTop);
+
+    workspaceFormat.onmousemove = function(e){
+        // console.log(e.clientX - shiftLeft, e.clientY - shiftTop);
+        e.target.style.left = (e.offsetX - shiftLeft) + "px";
+        e.target.style.top = (e.offsetY - shiftTop) + "px";
+    };
+
+    // e.target.style.left = startLeft + 5 + "px";
+    // e.target.style.top = startTop + 5 + "px";
+}
