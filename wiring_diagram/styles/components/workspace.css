@@ -22,7 +22,19 @@
 
   border: 1px solid black;
   position: absolute;
+  /* left: 0;
+  top: 0; */
   /* transform: scale(2); */
+}
+
+.toolElement {
+  width: 520px;
+  height: 220px;
+  background-color: lightblue;
+}
+
+.SVG_line {
+  stroke: black;
 }
 
 .testTool,
