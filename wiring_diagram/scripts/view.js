@@ -43,15 +43,13 @@ class ToolsViewSVG {
     this.tool.append(this.img);
     field.append(this.tool);
 
-    this.tool.style.left = this.myModel.centerX-field.offsetLeft-field.parentNode.offsetLeft;
-    this.tool.style.top = this.myModel.centerY-field.offsetTop-field.parentNode.offsetTop;
-    // console.log(field.parentNode.offsetLeft);
+    let scaleShiftHeight = field.offsetHeight*(1-scale)/2;
+    let scaleShiftWidth = field.offsetWidth*(1-scale)/2;
 
-  }
+    this.tool.style.left = this.myModel.centerX-field.offsetLeft-field.parentNode.offsetLeft-scaleShiftWidth;
+    this.tool.style.top = this.myModel.centerY-field.offsetTop-field.parentNode.offsetTop-scaleShiftHeight;
 
-  update(angleH, angleM, angleS) {
-    // this.secondsArrow.style.transform = `rotate(${angleS}deg)`;
-    // this.minutesArrow.style.transform = `rotate(${angleM}deg)`;
-    // this.hoursArrow.style.transform = `rotate(${angleH}deg)`;
+    console.log("this.myModel.centerX: "+this.myModel.centerX, "field.offsetLeft: "+field.offsetLeft, "field.parentNode.offsetLeft: "+field.parentNode.offsetLeft, "scale: "+scale, "scaleShiftHeight: "+scaleShiftHeight, "scaleShiftWidth: "+scaleShiftWidth);
+
   }
 }

@@ -111,14 +111,20 @@ workspace.addEventListener("wheel", (e)=>{
 
 function scaleWorkspace(e, target) {
     if (e.wheelDelta > 0) {
+        // target.style.height = target.offsetHeight*1.05 + "px";
+        // target.style.width = target.offsetWidth*1.05 + "px";
         scale += 0.05;
     } else {
+        // target.style.height = target.offsetHeight*0.95 + "px";
+        // target.style.width = target.offsetWidth*0.95 + "px";
         scale -= 0.05;
     }
 
-    let shiftLeft = workspace.offsetLeft;
-    let shiftTop = workspace.offsetTop; 
-    target.style.transformOrigin = `${e.clientX-shiftLeft}px ${e.clientY-shiftTop}px`;
-
+    // let shiftLeft = workspaceFormat.offsetLeft + workspace.offsetLeft;
+    // let shiftTop = workspaceFormat.offsetTop + workspace.offsetTop; 
+    // console.log(target.offsetHeight);
+    // target.style.transformOrigin = `${e.clientX-shiftLeft}px ${e.clientY-shiftTop}px`;
+    // target.style.height = target.offsetHeight*scale + "px";
+    // target.style.width = target.offsetWidth*scale + "px";
     target.style.transform = `scale(${scale})`;
 }

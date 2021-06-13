@@ -34,7 +34,7 @@ function markTool(e) {
         activeTool.classList.add("active_tool");
         typeTools = activeTool.dataset.type;
     }
-    console.log(typeTools);
+    // console.log(typeTools);
 }
 
 function cancelMarkTool(e) {
@@ -58,7 +58,7 @@ function createTool(e) {
     if(!TYPE_TOOLS[typeTools]) {
         return;
     }
-
+    console.log("e.clientX: "+e.clientX, "e.clientY: "+e.clientY);
     let tool1=new TYPE_TOOLS[typeTools](e.clientX, e.clientY);
 
     let tool1View=new ToolsViewSVG();
@@ -70,9 +70,9 @@ function createTool(e) {
 
     tool1View.drawTool(workspaceFormat);
     
-    console.log(tool1);
-    console.log(tool1View);
-    console.log(tool1CTRL);
+    // console.log(tool1);
+    // console.log(tool1View);
+    // console.log(tool1CTRL);
 }
 
 workspaceFormat.addEventListener("click", createTool);
