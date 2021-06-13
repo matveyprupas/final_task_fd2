@@ -5,6 +5,7 @@ const TYPE_TOOLS = {
     "3_dot": Diode,
     "4_dot": Diode,
     "generator": Diode,
+    "resistor": Diode,
 };
 
 
