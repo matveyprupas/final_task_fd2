@@ -22,6 +22,20 @@
 
   border: 1px solid black;
   position: absolute;
+  /* left: 0;
+  top: 0; */
+  /* transform: scale(2); */
+  /* transform-origin: 500px 500px; */
+}
+
+.toolElement {
+  width: 520px;
+  height: 220px;
+  background-color: lightblue;
+}
+
+.SVG_line {
+  stroke: black;
 }
 
 .testTool,
@@ -53,4 +67,8 @@
   width: 210mm;
   height: 297mm;
   background-color: red;
+}
+
+.svg_tool {
+  position: absolute;
 }

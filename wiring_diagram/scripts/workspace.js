@@ -4,6 +4,7 @@ const A3_HEIGHT = 420;
 const GRID_CELL_WIDTH = 2;
 
 
+
 let workspace = document.querySelector(".workspace");
 let workspaceFormat, workspaceFormatSelect;
 let chooseFormatBtn = document.querySelector(".format input");
@@ -18,7 +19,11 @@ function setHeightWorkspace () {
 setHeightWorkspace();
 
 
+
+
+
 function chooseFormat (e) {
+    // DOM workspaceFormat
     if(e) {
         e.preventDefault();
     }
@@ -70,15 +75,15 @@ window.addEventListener("mouseout", stopMoveDOM);
 function startMoveDOM(e) {
     e.preventDefault();
     if (e.which === 2) {        
+        //DOM
         let shiftLeft = e.clientX - e.target.offsetLeft;
         let shiftTop = e.clientY - e.target.offsetTop; 
-
-        console.log(e.target.offsetLeft, e.clientX);
 
         e.target.onmousemove = function(e){
             e.preventDefault();
             e.target.style.cursor = "move";
-
+            
+            //DOM
             e.target.style.left = (e.clientX - shiftLeft) + "px";
             e.target.style.top = (e.clientY - shiftTop) + "px";
         };
@@ -90,4 +95,36 @@ function stopMoveDOM(e) {
     e.target.onmousemove = null;
     e.target.style.cursor = "default";
     target = null;
+}
+
+
+
+
+// Scale workspace
+
+let scale = 1;
+workspace.addEventListener("wheel", (e)=>{
+    e.preventDefault();
+
+    scaleWorkspace(e, workspaceFormat);
+});
+
+function scaleWorkspace(e, target) {
+    if (e.wheelDelta > 0) {
+        // target.style.height = target.offsetHeight*1.05 + "px";
+        // target.style.width = target.offsetWidth*1.05 + "px";
+        scale += 0.05;
+    } else {
+        // target.style.height = target.offsetHeight*0.95 + "px";
+        // target.style.width = target.offsetWidth*0.95 + "px";
+        scale -= 0.05;
+    }
+
+    // let shiftLeft = workspaceFormat.offsetLeft + workspace.offsetLeft;
+    // let shiftTop = workspaceFormat.offsetTop + workspace.offsetTop; 
+    // console.log(target.offsetHeight);
+    // target.style.transformOrigin = `${e.clientX-shiftLeft}px ${e.clientY-shiftTop}px`;
+    // target.style.height = target.offsetHeight*scale + "px";
+    // target.style.width = target.offsetWidth*scale + "px";
+    target.style.transform = `scale(${scale})`;
 }

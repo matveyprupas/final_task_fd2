@@ -71,3 +71,7 @@
 .aside table {
   width: 100%;
 }
+
+.active_tool {
+  background-color: pink;
+}
