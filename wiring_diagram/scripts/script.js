@@ -1,5 +1,10 @@
 const TYPE_TOOLS = {
     "diode": Diode,
+    "line": Diode,
+    "angle": Diode,
+    "3_dot": Diode,
+    "4_dot": Diode,
+    "generator": Diode,
 };
 
 
@@ -34,7 +39,7 @@ function markTool(e) {
         activeTool.classList.add("active_tool");
         typeTools = activeTool.dataset.type;
     }
-    // console.log(typeTools);
+    console.log(typeTools);
 }
 
 function cancelMarkTool(e) {
