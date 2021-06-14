@@ -8,7 +8,7 @@
 // const SECONDS_ARROW_LENGTH = 90;
 const SVG_NS = "http://www.w3.org/2000/svg";
 const XLINK = "http://www.w3.org/1999/xlink";
-const DIODE_SIZE = 50;
+
 
 // Create Clock's class
 
@@ -46,8 +46,8 @@ class ToolsViewSVG {
     let scaleShiftHeight = field.offsetHeight*(1-scale)/2;
     let scaleShiftWidth = field.offsetWidth*(1-scale)/2;
 
-    this.tool.style.left = this.myModel.centerX-field.offsetLeft-field.parentNode.offsetLeft-scaleShiftWidth;
-    this.tool.style.top = this.myModel.centerY-field.offsetTop-field.parentNode.offsetTop-scaleShiftHeight;
+    this.tool.style.left = this.myModel.centerX-field.offsetLeft-field.parentNode.offsetLeft;
+    this.tool.style.top = this.myModel.centerY-field.offsetTop-field.parentNode.offsetTop;
 
     console.log("this.myModel.centerX: "+this.myModel.centerX, "field.offsetLeft: "+field.offsetLeft, "field.parentNode.offsetLeft: "+field.parentNode.offsetLeft, "scale: "+scale, "scaleShiftHeight: "+scaleShiftHeight, "scaleShiftWidth: "+scaleShiftWidth);
 

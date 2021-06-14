@@ -1,10 +1,10 @@
 const TYPE_TOOLS = {
     "diode": Diode,
     "line": Diode,
-    "angle": Diode,
-    "3_dot": Diode,
-    "4_dot": Diode,
-    "generator": Diode,
+    "angle": Angle,
+    "3_dot": Dot_3,
+    "4_dot": Dot_4,
+    "generator": Generator,
     "resistor": Diode,
 };
 
@@ -82,21 +82,3 @@ function createTool(e) {
 }
 
 workspaceFormat.addEventListener("click", createTool);
-
-// var clock1=new Clock("Your Location");
-// var clock1View=new ClockView();
-// var ctrlBtn1=new ClockControllerButtons();
-
-// var clock2=new Clock("New York");
-// var clock2View=new ClockView();
-// var ctrlBtn2=new ClockControllerButtons();
-
-// увязываем компоненты друг с другом
-// указываем компонентам, в каком DOM им работать
-// var containerElem=document.querySelector('.dom__clock');
-
-
-
-// clock2.start(clock2View);
-// clock2View.start(clock2,containerElem);
-// ctrlBtn2.start(clock2,containerElem);

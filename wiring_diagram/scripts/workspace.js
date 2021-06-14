@@ -111,20 +111,46 @@ workspace.addEventListener("wheel", (e)=>{
 
 function scaleWorkspace(e, target) {
     if (e.wheelDelta > 0) {
-        // target.style.height = target.offsetHeight*1.05 + "px";
-        // target.style.width = target.offsetWidth*1.05 + "px";
+        target.childNodes.forEach((el) => {
+            let width = Math.abs(el.getBBox().width*1.05);
+            let height = Math.abs(el.getBBox().height*1.05);
+            let left = Math.abs(parseFloat(el.style.left)*1.05);
+            let top = Math.abs(parseFloat(el.style.top)*1.05);
+
+            el.setAttribute("width", `${width}`);
+            el.setAttribute("height", `${height}`);
+
+            el.firstChild.setAttribute("width", `${width}`);
+            el.firstChild.setAttribute("height", `${height}`);
+
+            el.style.left = left + "px";
+            el.style.top = top + "px";
+        });
+
+        DIODE_SIZE = Math.abs(DIODE_SIZE*1.05);
+        target.style.height = target.offsetHeight*1.05 + "px";
+        target.style.width = target.offsetWidth*1.05 + "px";
         scale += 0.05;
     } else {
-        // target.style.height = target.offsetHeight*0.95 + "px";
-        // target.style.width = target.offsetWidth*0.95 + "px";
+        target.childNodes.forEach((el) => {
+            let width = Math.abs(el.getBBox().width*0.95);
+            let height = Math.abs(el.getBBox().height*0.95);
+            let left = Math.abs(parseFloat(el.style.left)*0.95);
+            let top = Math.abs(parseFloat(el.style.top)*0.95);
+
+            el.setAttribute("width", `${width}`);
+            el.setAttribute("height", `${height}`);
+
+            el.firstChild.setAttribute("width", `${width}`);
+            el.firstChild.setAttribute("height", `${height}`);
+
+            el.style.left = left + "px";
+            el.style.top = top + "px";
+        });
+        
+        DIODE_SIZE = Math.abs(DIODE_SIZE*0.95);
+        target.style.height = target.offsetHeight*0.95 + "px";
+        target.style.width = target.offsetWidth*0.95 + "px";
         scale -= 0.05;
     }
-
-    // let shiftLeft = workspaceFormat.offsetLeft + workspace.offsetLeft;
-    // let shiftTop = workspaceFormat.offsetTop + workspace.offsetTop; 
-    // console.log(target.offsetHeight);
-    // target.style.transformOrigin = `${e.clientX-shiftLeft}px ${e.clientY-shiftTop}px`;
-    // target.style.height = target.offsetHeight*scale + "px";
-    // target.style.width = target.offsetWidth*scale + "px";
-    target.style.transform = `scale(${scale})`;
 }
