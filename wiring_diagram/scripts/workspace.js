@@ -117,6 +117,17 @@ function scaleWorkspace(e, target) {
             let left = Math.abs(parseFloat(el.style.left)*1.05);
             let top = Math.abs(parseFloat(el.style.top)*1.05);
 
+            el.querySelectorAll("circle").forEach((cir) => {
+                let circleRadius = parseFloat(cir.getAttribute("r"))*1.05;
+                let circleLeft = parseFloat(cir.getAttribute("cx"))*1.05;
+                let circleTop = parseFloat(cir.getAttribute("cy"))*1.05;
+                // console.log(circleRadius, circleLeft, scircleTop);
+
+                cir.setAttribute("r", `${circleRadius}`);
+                cir.setAttribute("cx", `${circleLeft}`);
+                cir.setAttribute("cy", `${circleTop}`);
+            });
+
             el.setAttribute("width", `${width}`);
             el.setAttribute("height", `${height}`);
 
@@ -137,6 +148,17 @@ function scaleWorkspace(e, target) {
             let height = Math.abs(el.getBBox().height*0.95);
             let left = Math.abs(parseFloat(el.style.left)*0.95);
             let top = Math.abs(parseFloat(el.style.top)*0.95);
+
+            el.querySelectorAll("circle").forEach((cir) => {
+                let circleRadius = parseFloat(cir.getAttribute("r"))*0.95;
+                let circleLeft = parseFloat(cir.getAttribute("cx"))*0.95;
+                let circleTop = parseFloat(cir.getAttribute("cy"))*0.95;
+                // console.log(circleRadius, circleLeft, circleTop);
+
+                cir.setAttribute("r", `${circleRadius}`);
+                cir.setAttribute("cx", `${circleLeft}`);
+                cir.setAttribute("cy", `${circleTop}`);
+            });
 
             el.setAttribute("width", `${width}`);
             el.setAttribute("height", `${height}`);

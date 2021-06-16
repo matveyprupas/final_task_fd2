@@ -6,6 +6,7 @@ const TYPE_TOOLS = {
     "4_dot": Dot_4,
     "generator": Generator,
     "resistor": Diode,
+    "choose": "chooseTools"
 };
 
 
@@ -17,6 +18,9 @@ let typeTools = "";
 let activeTool = null;
 
 tools.addEventListener("mousedown", markTool);
+window.addEventListener("keydown", (e) => {
+    if(e.key === "Escape") cancelMarkTool(e);
+});
 
 
 function markTool(e) {
@@ -24,7 +28,7 @@ function markTool(e) {
     let labelTable = tools.querySelector("th");
 
     if (activeTool) {
-        cancelMarkTool();
+        cancelMarkTool(e);
     }
 
     activeTool = e.target;
@@ -51,6 +55,12 @@ function cancelMarkTool(e) {
         activeTool.classList.remove("active_tool");
         typeTools = activeTool.dataset.type;
     }
+    if(e.key === "Escape") {
+        let activeTool = tools.querySelector(".active_tool");
+        if (activeTool) activeTool.classList.remove("active_tool");
+        typeTools = "";
+    }
+    console.log(typeTools);
 }
 
 
@@ -61,9 +71,10 @@ function cancelMarkTool(e) {
 // Create components by MVC
 
 function createTool(e) {
-    if(!TYPE_TOOLS[typeTools]) {
+    if(!TYPE_TOOLS[typeTools] || typeTools === "choose") {
         return;
     }
+    console.log(TYPE_TOOLS[typeTools]);
     console.log("e.clientX: "+e.clientX, "e.clientY: "+e.clientY);
     let tool1=new TYPE_TOOLS[typeTools](e.clientX, e.clientY);
 
@@ -82,3 +93,62 @@ function createTool(e) {
 }
 
 workspaceFormat.addEventListener("click", createTool);
+workspaceFormat.addEventListener("click", chooseTools);
+
+
+
+
+
+
+// Choose tools
+
+function chooseTools (e) {
+    if (e.target === workspaceFormat || typeTools !== "choose") {
+        return;
+    }
+    if (e.target instanceof SVGElement) {
+    } else if (e.target instanceof SVGViewElement) {
+    } else {
+    }
+    
+    e.target.classList.toggle("svg_tool_activated");
+    if (e.target.parentNode === workspaceFormat) {
+        return;
+    }
+    e.target.parentNode.classList.toggle("svg_tool_activated");
+}
+
+
+// Move tools 
+
+workspaceFormat.addEventListener("mousedown", startMoveTools);
+window.addEventListener("mouseup", stopMoveDOM);
+window.addEventListener("mouseout", stopMoveDOM);
+
+function startMoveTools(e) {
+    e.preventDefault();
+    let moveTools = workspaceFormat.querySelectorAll(".svg_tool_activated");
+    console.log(moveTools);
+
+    if (e.which === 1) {        
+        //DOM
+        let shiftLeft = e.clientX - e.target.offsetLeft;
+        let shiftTop = e.clientY - e.target.offsetTop; 
+
+        e.target.onmousemove = function(e){
+            e.preventDefault();
+            e.target.style.cursor = "move";
+            
+            //DOM
+            e.target.style.left = (e.clientX - shiftLeft) + "px";
+            e.target.style.top = (e.clientY - shiftTop) + "px";
+        };
+    } 
+}
+
+function stopMoveTools(e) {
+    e.preventDefault();
+    e.target.onmousemove = null;
+    e.target.style.cursor = "default";
+    target = null;
+}

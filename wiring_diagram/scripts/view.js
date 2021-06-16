@@ -41,6 +41,17 @@ class ToolsViewSVG {
     this.img.setAttribute("height", `${this.myModel.size}`);
 
     this.tool.append(this.img);
+    
+    this.myModel.contacts.forEach((el) => {
+      this.contact1 = document.createElementNS(SVG_NS, "circle");
+      this.contact1.setAttribute("cx", `${el.shiftX}`);
+      this.contact1.setAttribute("cy", `${el.shiftY}`);
+      this.contact1.setAttribute("r", `${el.r}`);
+      this.contact1.classList.add("SVG_contact");
+      
+      this.tool.append(this.contact1);
+    });
+
     field.append(this.tool);
 
     let scaleShiftHeight = field.offsetHeight*(1-scale)/2;

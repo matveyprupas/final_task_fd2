@@ -1,3 +1,7 @@
+:root {
+  /* --BORDER_WIDTH: 2px; */
+}
+
 .workspace {
   /* height: 85vh; */
   width: 100%;
@@ -34,10 +38,6 @@
   background-color: lightblue;
 }
 
-.SVG_line {
-  stroke: black;
-}
-
 .testTool,
 .testTool2 {
   /* position: absolute; */
@@ -71,4 +71,20 @@
 
 .svg_tool {
   position: absolute;
+  border: transparent 2px solid;
+}
+
+.svg_tool_activated {
+  border: blue 2px solid;
+}
+
+.SVG_contact {
+  position: absolute;
+  stroke: red;
+  fill: red;
+}
+
+.SVG_line {
+  position: absolute;
+  stroke: black;
 }
