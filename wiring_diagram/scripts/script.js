@@ -44,7 +44,7 @@ function markTool(e) {
         activeTool.classList.add("active_tool");
         typeTools = activeTool.dataset.type;
     }
-    console.log(typeTools);
+    // console.log(typeTools);
 }
 
 function cancelMarkTool(e) {
@@ -60,7 +60,7 @@ function cancelMarkTool(e) {
         if (activeTool) activeTool.classList.remove("active_tool");
         typeTools = "";
     }
-    console.log(typeTools);
+    // console.log(typeTools);
 }
 
 
@@ -74,8 +74,8 @@ function createTool(e) {
     if(!TYPE_TOOLS[typeTools] || typeTools === "choose") {
         return;
     }
-    console.log(TYPE_TOOLS[typeTools]);
-    console.log("e.clientX: "+e.clientX, "e.clientY: "+e.clientY);
+    // console.log(TYPE_TOOLS[typeTools]);
+    // console.log("e.clientX: "+e.clientX, "e.clientY: "+e.clientY);
     let tool1=new TYPE_TOOLS[typeTools](e.clientX, e.clientY);
 
     let tool1View=new ToolsViewSVG();
@@ -93,7 +93,6 @@ function createTool(e) {
 }
 
 workspaceFormat.addEventListener("click", createTool);
-workspaceFormat.addEventListener("click", chooseTools);
 
 
 
@@ -102,22 +101,63 @@ workspaceFormat.addEventListener("click", chooseTools);
 
 // Choose tools
 
+let choosedTools = {}; // I need Promise
+
+workspaceFormat.addEventListener("mousedown", eTargetOffsetStartInit);
+workspaceFormat.addEventListener("click", chooseTools);
+
+
+function addNodesToChoosedTools() {
+    choosedTools = workspaceFormat.querySelectorAll(".svg_tool_activated");
+}
+
 function chooseTools (e) {
     if (e.target === workspaceFormat || typeTools !== "choose") {
         return;
     }
-    if (e.target instanceof SVGElement) {
-    } else if (e.target instanceof SVGViewElement) {
-    } else {
+
+    // let eTargetOffsetLeftStart = (e.target.style.left === "") ? parseFloat(e.target.parentNode.style.left) : parseFloat(e.target.style.left);
+    // let eTargetOffsetTopStart = (e.target.style.top === "") ? parseFloat(e.target.parentNode.style.top) : parseFloat(e.target.style.top);
+    // console.log(eTargetOffsetLeftStart)
+
+    if(!e.target.classList.contains("svg_tool_activated")) {
+        e.target.eTargetOffsetLeftEnd = (e.target.style.left === "") ? parseFloat(e.target.parentNode.style.left) : parseFloat(e.target.style.left);
+        e.target.eTargetOffsetTopEnd = (e.target.style.top === "") ? parseFloat(e.target.parentNode.style.top) : parseFloat(e.target.style.top);
+
+        // console.log("endLeft: " + e.target.eTargetOffsetLeftEnd, "endTop: " + e.target.eTargetOffsetTopEnd);
+
+        if(e.target.eTargetOffsetLeftEnd !== e.target.eTargetOffsetLeftStart || e.target.eTargetOffsetTopEnd !== e.target.eTargetOffsetTopStart) return;
+
+        e.target.classList.add("svg_tool_activated");
+        if (e.target.parentNode === workspaceFormat) {
+            return;
+        }
+        e.target.parentNode.classList.add("svg_tool_activated");
+    } else if(e.target.classList.contains("svg_tool_activated")) {
+        e.target.eTargetOffsetLeftEnd = (e.target.style.left === "") ? parseFloat(e.target.parentNode.style.left) : parseFloat(e.target.style.left);
+        e.target.eTargetOffsetTopEnd = (e.target.style.top === "") ? parseFloat(e.target.parentNode.style.top) : parseFloat(e.target.style.top);
+
+        // console.log("endLeft: " + e.target.eTargetOffsetLeftEnd, "endTop: " + e.target.eTargetOffsetTopEnd);
+
+        if(e.target.eTargetOffsetLeftEnd !== e.target.eTargetOffsetLeftStart || e.target.eTargetOffsetTopEnd !== e.target.eTargetOffsetTopStart) return;
+
+        e.target.classList.remove("svg_tool_activated");
+        if (e.target.parentNode === workspaceFormat) {
+            return;
+        }
+        e.target.parentNode.classList.remove("svg_tool_activated");
     }
     
-    e.target.classList.toggle("svg_tool_activated");
-    if (e.target.parentNode === workspaceFormat) {
-        return;
-    }
-    e.target.parentNode.classList.toggle("svg_tool_activated");
+
 }
 
+function eTargetOffsetStartInit (e) {
+    e.target.eTargetOffsetLeftStart = (e.target.style.left === "") ? parseFloat(e.target.parentNode.style.left) : parseFloat(e.target.style.left);
+
+    e.target.eTargetOffsetTopStart = (e.target.style.top === "") ? parseFloat(e.target.parentNode.style.top) : parseFloat(e.target.style.top);
+
+    // console.log("startLeft: " + e.target.eTargetOffsetLeftStart, "startTop: " + e.target.eTargetOffsetTopStart)
+}
 
 // Move tools 
 
@@ -125,15 +165,22 @@ workspaceFormat.addEventListener("mousedown", startMoveTools);
 window.addEventListener("mouseup", stopMoveDOM);
 window.addEventListener("mouseout", stopMoveDOM);
 
+
 function startMoveTools(e) {
     e.preventDefault();
-    let moveTools = workspaceFormat.querySelectorAll(".svg_tool_activated");
+    if(e.target === workspaceFormat || typeTools !== "choose") return;
+
     console.log(moveTools);
 
-    if (e.which === 1) {        
+    if (e.which === 1) {
         //DOM
-        let shiftLeft = e.clientX - e.target.offsetLeft;
-        let shiftTop = e.clientY - e.target.offsetTop; 
+        let eTargetOffsetLeft = (e.target.style.left === "") ? e.target.parentNode.style.left : e.target.style.left;
+        let eTargetOffsetTop = (e.target.style.top === "") ? e.target.parentNode.style.top : e.target.style.top;
+
+        let shiftLeft = e.clientX - parseFloat(eTargetOffsetLeft);
+        let shiftTop = e.clientY - parseFloat(eTargetOffsetTop); 
+
+        
 
         e.target.onmousemove = function(e){
             e.preventDefault();
@@ -142,6 +189,10 @@ function startMoveTools(e) {
             //DOM
             e.target.style.left = (e.clientX - shiftLeft) + "px";
             e.target.style.top = (e.clientY - shiftTop) + "px";
+            e.target.parentNode.style.left = (e.clientX - shiftLeft) + "px";
+            e.target.parentNode.style.top = (e.clientY - shiftTop) + "px";
+
+            // console.log(e.clientX, shiftLeft);
         };
     } 
 }

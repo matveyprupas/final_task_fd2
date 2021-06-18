@@ -67,7 +67,6 @@ workspace.addEventListener("contextmenu", (e)=>e.preventDefault());
 
 
 workspaceFormat.addEventListener("mousedown", startMoveDOM);
-
 window.addEventListener("mouseup", stopMoveDOM);
 window.addEventListener("mouseout", stopMoveDOM);
 
