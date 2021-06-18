@@ -1,3 +1,6 @@
+let DIODE_SIZE = 50;
+var BORDER_WIDTH = "2px";
+
 // Create parent class
 
 class Tools {
@@ -26,20 +29,138 @@ class Diode extends Tools {
 
         this.img = "./assets/imgs/logo-diode.svg";
         this.size = DIODE_SIZE;
+        this.imgSize = DIODE_SIZE-6;
 
         this.centerX = this.x - this.size/2;
         this.centerY = this.y - this.size/2;
 
-        this.contacts = {
-            1: {
-                x: this.x,
-                y: this.y - this.size/2
+        this.contacts = [
+            {
+                shiftX: DIODE_SIZE/20,
+                shiftY: DIODE_SIZE/2,
+                r: DIODE_SIZE/20
             },
-            2: {
-                x: this.x + this.size,
-                y: this.x - this.size/2
+            {
+                shiftX: DIODE_SIZE - DIODE_SIZE/20,
+                shiftY: DIODE_SIZE/2,
+                r: DIODE_SIZE/20
             }
-        }
+        ]
+    }
+}
+
+class Angle extends Tools {
+    constructor(x, y) {
+        super(x, y);
+
+        this.img = "./assets/imgs/angle-svg.svg";
+        this.size = DIODE_SIZE;
+
+        this.centerX = this.x - this.size/2;
+        this.centerY = this.y - this.size/2;
+
+        this.contacts = [
+            {
+                shiftX: DIODE_SIZE/20+4,
+                shiftY: DIODE_SIZE/20+2,
+                r: DIODE_SIZE/20
+            },
+            {
+                shiftX: DIODE_SIZE - (DIODE_SIZE/20+2),
+                shiftY: DIODE_SIZE - (DIODE_SIZE/20+5),
+                r: DIODE_SIZE/20
+            }
+        ]
+    }
+}
+
+class Dot_3 extends Tools {
+    constructor(x, y) {
+        super(x, y);
+
+        this.img = "./assets/imgs/triangle-svg.svg";
+        this.size = DIODE_SIZE;
+
+        this.centerX = this.x - this.size/2;
+        this.centerY = this.y - this.size/2;
+
+        this.contacts = [
+            {
+                shiftX: DIODE_SIZE/2-6,
+                shiftY: DIODE_SIZE/20+2,
+                r: DIODE_SIZE/20
+            },
+            {
+                shiftX: DIODE_SIZE - (DIODE_SIZE/20+5),
+                shiftY: DIODE_SIZE/2-2,
+                r: DIODE_SIZE/20
+            },
+            {
+                shiftX: DIODE_SIZE/2-6,
+                shiftY: DIODE_SIZE - (DIODE_SIZE/20+2),
+                r: DIODE_SIZE/20
+            }
+        ]
+    }
+}
+
+class Dot_4 extends Tools {
+    constructor(x, y) {
+        super(x, y);
+
+        this.img = "./assets/imgs/cross-angle-svg.svg";
+        this.size = DIODE_SIZE;
+
+        this.centerX = this.x - this.size/2;
+        this.centerY = this.y - this.size/2;
+
+        this.contacts = [
+            {
+                shiftX: DIODE_SIZE/2,
+                shiftY: DIODE_SIZE/20+1,
+                r: DIODE_SIZE/20
+            },
+            {
+                shiftX: DIODE_SIZE - (DIODE_SIZE/20+3),
+                shiftY: DIODE_SIZE/2-2,
+                r: DIODE_SIZE/20
+            },
+            {
+                shiftX: DIODE_SIZE/2,
+                shiftY: DIODE_SIZE - (DIODE_SIZE/20+1),
+                r: DIODE_SIZE/20
+            },
+            {
+                shiftX: DIODE_SIZE/20+1,
+                shiftY: DIODE_SIZE/2-2,
+                r: DIODE_SIZE/20
+            }
+        ]
+    }
+}
+
+class Generator extends Tools {
+    constructor(x, y) {
+        super(x, y);
+
+        this.img = "./assets/imgs/generator-svg.svg";
+        this.size = DIODE_SIZE;
+
+        this.centerX = this.x - this.size/2;
+        this.centerY = this.y - this.size/2;
+
+        this.contacts = [
+            {
+                shiftX: DIODE_SIZE/20,
+                shiftY: this.size/2,
+                r: DIODE_SIZE/20
+            },
+            {
+                shiftX: DIODE_SIZE - DIODE_SIZE/20,
+                shiftY: this.size/2,
+                r: DIODE_SIZE/20
+            }
+        ]
     }
 }
 
@@ -59,33 +180,23 @@ class Diode extends Tools {
 
 
 
+// Create workspace model
 
+class Workspace {
+    constructor(format) {
+        this.format = format;
 
+        this.y = y;
 
+        this.angle = 0;
 
+        this.id = 0;
 
+        this.type = "test";
 
+      }
 
-
-
-
-function creationTool (name) {
-    let tool = document.createElementNS(SVG_NS, "svg");
-    tool.classList.add("toolElement");
-    // tool.setAttribute("width", "400");
-    // tool.setAttribute("height", "400");
-
-    let line = document.createElementNS(SVG_NS, "line");
-    line.classList.add("SVG_line");
-    line.setAttribute("stroke-width", "1");
-    line.setAttribute("x1", `20`);
-    line.setAttribute("y1", `20`);
-    line.setAttribute("x2", `500`);
-    line.setAttribute("y2", `200`);
-
-
-    tool.appendChild(line);
-    workspaceFormat.appendChild(tool);
-} 
-
-// creationTool();
+    start(view) {
+        this.myView = view;    
+    }
+}
