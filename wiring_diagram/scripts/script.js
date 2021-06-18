@@ -101,24 +101,23 @@ workspaceFormat.addEventListener("click", createTool);
 
 // Choose tools
 
-let choosedTools = {}; // I need Promise
+let choosedTools = {};
 
 workspaceFormat.addEventListener("mousedown", eTargetOffsetStartInit);
 workspaceFormat.addEventListener("click", chooseTools);
+workspaceFormat.addEventListener("click", addNodesToChoosedTools);
+
 
 
 function addNodesToChoosedTools() {
     choosedTools = workspaceFormat.querySelectorAll(".svg_tool_activated");
+    console.log(choosedTools);
 }
 
 function chooseTools (e) {
     if (e.target === workspaceFormat || typeTools !== "choose") {
         return;
     }
-
-    // let eTargetOffsetLeftStart = (e.target.style.left === "") ? parseFloat(e.target.parentNode.style.left) : parseFloat(e.target.style.left);
-    // let eTargetOffsetTopStart = (e.target.style.top === "") ? parseFloat(e.target.parentNode.style.top) : parseFloat(e.target.style.top);
-    // console.log(eTargetOffsetLeftStart)
 
     if(!e.target.classList.contains("svg_tool_activated")) {
         e.target.eTargetOffsetLeftEnd = (e.target.style.left === "") ? parseFloat(e.target.parentNode.style.left) : parseFloat(e.target.style.left);
@@ -170,7 +169,7 @@ function startMoveTools(e) {
     e.preventDefault();
     if(e.target === workspaceFormat || typeTools !== "choose") return;
 
-    console.log(moveTools);
+    // console.log(moveTools);
 
     if (e.which === 1) {
         //DOM
