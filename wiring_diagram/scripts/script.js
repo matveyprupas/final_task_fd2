@@ -9,7 +9,8 @@ const TYPE_TOOLS = {
     "choose": "chooseTools"
 };
 
-
+let allTools = [];
+let allContacts = [];
 
 
 
@@ -70,14 +71,16 @@ function cancelMarkTool(e) {
 
 // Create components by MVC
 
+workspaceFormat.addEventListener("click", createTool);
+
 function createTool(e) {
     if(!TYPE_TOOLS[typeTools] || typeTools === "choose") {
         return;
     }
     // console.log(TYPE_TOOLS[typeTools]);
     // console.log("e.clientX: "+e.clientX, "e.clientY: "+e.clientY);
-    let tool1=new TYPE_TOOLS[typeTools](e.clientX, e.clientY);
 
+    let tool1=new TYPE_TOOLS[typeTools](e.clientX, e.clientY);
     let tool1View=new ToolsViewSVG();
     let tool1CTRL=new ToolsControllers();
     
@@ -86,14 +89,21 @@ function createTool(e) {
     tool1CTRL.start(tool1,workspaceFormat);
 
     tool1View.drawTool(workspaceFormat);
-    
-    // console.log(tool1);
+
+    allTools.push(tool1);
+    allContacts.push(tool1.shiftContacts);
+
+    connectContacts(e);
+    // console.log(allTools);
+    // console.log(allContacts);
     // console.log(tool1View);
     // console.log(tool1CTRL);
 }
 
-workspaceFormat.addEventListener("click", createTool);
-
+function connectContacts (e) {
+    // allContacts is Array
+    // console.log(allTools);
+}
 
 
 
@@ -102,6 +112,7 @@ workspaceFormat.addEventListener("click", createTool);
 // Choose tools
 
 let choosedTools = {};
+// let allConnectors = {};
 
 workspaceFormat.addEventListener("mousedown", eTargetOffsetStartInit);
 workspaceFormat.addEventListener("click", chooseTools);
@@ -111,7 +122,9 @@ workspaceFormat.addEventListener("click", addNodesToChoosedTools);
 
 function addNodesToChoosedTools() {
     choosedTools = workspaceFormat.querySelectorAll(".svg_tool_activated");
-    console.log(choosedTools);
+    // choosedTools.forEach()
+    // console.log(Tools);
+    // console.log(allConnectors);
 }
 
 function chooseTools (e) {
@@ -167,33 +180,32 @@ window.addEventListener("mouseout", stopMoveDOM);
 
 function startMoveTools(e) {
     e.preventDefault();
-    if(e.target === workspaceFormat || typeTools !== "choose") return;
+    if(e.target === workspaceFormat || typeTools !== "choose" || !e.target.classList.contains("svg_tool_activated")) return;
 
     // console.log(moveTools);
 
-    if (e.which === 1) {
-        //DOM
-        let eTargetOffsetLeft = (e.target.style.left === "") ? e.target.parentNode.style.left : e.target.style.left;
-        let eTargetOffsetTop = (e.target.style.top === "") ? e.target.parentNode.style.top : e.target.style.top;
+    let eTargetOffsetLeft = (e.target.style.left === "") ? e.target.parentNode.style.left : e.target.style.left;
+    let eTargetOffsetTop = (e.target.style.top === "") ? e.target.parentNode.style.top : e.target.style.top;
 
-        let shiftLeft = e.clientX - parseFloat(eTargetOffsetLeft);
-        let shiftTop = e.clientY - parseFloat(eTargetOffsetTop); 
+    let shiftLeft = e.clientX - parseFloat(eTargetOffsetLeft);
+    let shiftTop = e.clientY - parseFloat(eTargetOffsetTop); 
 
+    
+
+    e.target.onmousemove = function(e){
+        e.preventDefault();
+        e.target.style.cursor = "move";
         
+        e.target.style.left = (e.clientX - shiftLeft) + "px";
+        e.target.style.top = (e.clientY - shiftTop) + "px";
+        e.target.parentNode.style.left = (e.clientX - shiftLeft) + "px";
+        e.target.parentNode.style.top = (e.clientY - shiftTop) + "px";
 
-        e.target.onmousemove = function(e){
-            e.preventDefault();
-            e.target.style.cursor = "move";
-            
-            //DOM
-            e.target.style.left = (e.clientX - shiftLeft) + "px";
-            e.target.style.top = (e.clientY - shiftTop) + "px";
-            e.target.parentNode.style.left = (e.clientX - shiftLeft) + "px";
-            e.target.parentNode.style.top = (e.clientY - shiftTop) + "px";
+        // console.log(e.clientX, shiftLeft);
+        connectContacts(e);
+    };
 
-            // console.log(e.clientX, shiftLeft);
-        };
-    } 
+    connectContacts(e);
 }
 
 function stopMoveTools(e) {
@@ -201,4 +213,5 @@ function stopMoveTools(e) {
     e.target.onmousemove = null;
     e.target.style.cursor = "default";
     target = null;
+    connectContacts(e);
 }
