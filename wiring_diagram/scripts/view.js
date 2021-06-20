@@ -32,6 +32,8 @@ class ToolsViewSVG {
 
     this.tool = document.createElementNS(SVG_NS, "svg");
     this.tool.classList.add("svg_tool");
+    this.tool.dataset.type = typeTools + this.myModel.i;
+    this.myModel.i += 1;
     this.tool.setAttribute("width", `${this.myModel.size}`);
     this.tool.setAttribute("height", `${this.myModel.size}`);
 

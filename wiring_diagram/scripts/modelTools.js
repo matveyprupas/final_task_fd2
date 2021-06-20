@@ -7,17 +7,33 @@ class Tools {
     constructor(x, y) {
         this.x = x;
         this.y = y;
+        this.i = 1;
 
         this.angle = 0;
 
         this.id = 0;
 
         this.type = "test";
-
+        this.contacts = [];
       }
 
     start(view) {
-        this.myView = view;    
+        this.myView = view;
+        this.contactsShift();
+    }
+    
+    contactsShift() {
+        this.shiftContacts = []; 
+
+        let shiftToolX = this.centerX - workspace.offsetLeft - workspaceFormat.offsetLeft;
+        let shiftToolY = this.centerY - workspace.offsetTop - workspaceFormat.offsetTop;
+
+        for (let i = 0; i < this.contacts.length; i++) {
+            let shiftContactX = shiftToolX + this.contacts[i].shiftX;
+            let shiftContactY = shiftToolY + this.contacts[i].shiftY;
+            this.shiftContacts.push({shiftContactX: shiftContactX, shiftContactY: shiftContactY}); 
+        }
+
     }
 }
 
@@ -38,12 +54,14 @@ class Diode extends Tools {
             {
                 shiftX: DIODE_SIZE/20,
                 shiftY: DIODE_SIZE/2,
-                r: DIODE_SIZE/20
+                r: DIODE_SIZE/20,
+                connected: false
             },
             {
                 shiftX: DIODE_SIZE - DIODE_SIZE/20,
                 shiftY: DIODE_SIZE/2,
-                r: DIODE_SIZE/20
+                r: DIODE_SIZE/20,
+                connected: false
             }
         ]
     }
