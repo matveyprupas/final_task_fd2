@@ -9,7 +9,6 @@ const TYPE_TOOLS = {
     "choose": "chooseTools"
 };
 
-let allTools = [];
 let allContacts = [];
 
 
@@ -72,6 +71,9 @@ function cancelMarkTool(e) {
 // Create components by MVC
 
 workspaceFormat.addEventListener("click", createTool);
+window.addEventListener("keydown", (e) => {
+    if(e.key === "Delete") removeTool(e);
+});
 
 function createTool(e) {
     if(!TYPE_TOOLS[typeTools] || typeTools === "choose") {
@@ -89,20 +91,55 @@ function createTool(e) {
     tool1CTRL.start(tool1,workspaceFormat);
 
     tool1View.drawTool(workspaceFormat);
+    tool1.contactsShift();
+    tool1.addEmptyContacts(tool1View);
 
-    allTools.push(tool1);
+    allToolsOnWorkspace.push(tool1);
     allContacts.push(tool1.shiftContacts);
 
-    connectContacts(e);
-    // console.log(allTools);
+    connectContacts(tool1);
+    // console.log(allToolsOnWorkspace);
     // console.log(allContacts);
     // console.log(tool1View);
     // console.log(tool1CTRL);
 }
 
-function connectContacts (e) {
+function removeTool(e) {
+    let id;
+    choosedTools.forEach((el) => {
+        if(el.tagName === "svg") {
+            id = parseFloat(el.dataset.number);
+            delete allToolsOnWorkspace[id];
+            delete emptyContacts[id];
+        }        
+        el.style.display = "none";
+        el.classList.remove("svg_tool_activated");
+        addNodesToChoosedTools();
+    });
+}
+
+function connectContacts (node) {
+    let model;
+    if(node.tagName === "image") {
+        model = allToolsOnWorkspace[+node.parentNode.dataset.number];
+    } else {
+        model = node;
+    }
+
+    model.contactsShift();
+    // model.shiftContact
+    // emptyContacts.forEach((el) => {
+    //     if (el === model) console.log("true");
+    //     for (let i = 0; i < el.length; i++) {
+            // console.log(el[i].shiftContactX);
+    //     }
+    // });
+
+    
+    
+    // model.addEmptyContacts();
     // allContacts is Array
-    // console.log(allTools);
+    console.log(model);
 }
 
 
@@ -159,7 +196,7 @@ function chooseTools (e) {
         }
         e.target.parentNode.classList.remove("svg_tool_activated");
     }
-    
+    // console.log(choosedTools);
 
 }
 
@@ -202,10 +239,10 @@ function startMoveTools(e) {
         e.target.parentNode.style.top = (e.clientY - shiftTop) + "px";
 
         // console.log(e.clientX, shiftLeft);
-        connectContacts(e);
+        connectContacts(e.target);
     };
 
-    connectContacts(e);
+    // connectContacts(e.target);
 }
 
 function stopMoveTools(e) {
@@ -213,5 +250,5 @@ function stopMoveTools(e) {
     e.target.onmousemove = null;
     e.target.style.cursor = "default";
     target = null;
-    connectContacts(e);
+    // connectContacts(e);
 }
