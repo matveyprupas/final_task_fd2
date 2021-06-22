@@ -33,7 +33,7 @@ class Tools {
         for (let i = 0; i < this.contacts.length; i++) {
             let shiftContactX = shiftToolX + this.contacts[i].shiftX;
             let shiftContactY = shiftToolY + this.contacts[i].shiftY;
-            this.shiftContacts.push({shiftContactX: shiftContactX, shiftContactY: shiftContactY}); 
+            this.shiftContacts.push({shiftContactX: shiftContactX, shiftContactY: shiftContactY, connected: false}); 
         }
 
         // console.log(this.shiftContacts);

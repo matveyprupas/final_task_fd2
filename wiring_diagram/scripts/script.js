@@ -128,19 +128,58 @@ function connectContacts (node) {
 
     model.contactsShift();
     // model.shiftContact
-    // emptyContacts.forEach((el) => {
-    //     if (el === model) console.log("true");
-    //     for (let i = 0; i < el.length; i++) {
-            // console.log(el[i].shiftContactX);
-    //     }
-    // });
+    emptyContacts.forEach((el) => {
+        if (el[0] === model) {
+            for (let i = 1; i < el.length; i++) {
+                el[i] = model.shiftContacts[i-1];
+            }
+        } else {
+            for (let i = 1; i < el.length; i++) {
+                if(el[i].shiftContactY <= model.shiftContacts[i-1].shiftContactY + 2 && el[i].shiftContactY >= model.shiftContacts[i-1].shiftContactY - 2 && !model.shiftContacts[i-1].connected) {
+                    console.log("CONNECT!!!");
+                    drawConnetion(model.shiftContacts[i-1].shiftContactX, el[i].shiftContactY, el[i].shiftContactX, el[i].shiftContactY);
+                    model.shiftContacts[i-1].connected = true;
+                    console.log(model, el[0]);
+                }
+                console.log(model.shiftContacts[i-1].shiftContactY, el[i].shiftContactY);
+            }
+        }
+        
+    });
 
     
     
     // model.addEmptyContacts();
     // allContacts is Array
-    console.log(model);
+    // console.log(model.shiftContacts, emptyContacts);
 }
+
+function drawConnetion (x1, y1, x2, y2) {
+    console.log(x1, y1, x2, y2);
+    const LINE_CONNECTION_WIDTH = 2;
+    connection = document.createElementNS(SVG_NS, "svg");
+    connection.classList.add("SVG_line");
+    // connection.setAttribute("width", `${Math.abs(x2 - x1)}`);
+    // connection.setAttribute("height", `${2}`);
+    connection.setAttribute("width", `${Math.abs(x2-x1)}`);
+    connection.setAttribute("height", `${LINE_CONNECTION_WIDTH}`);
+
+    lineConnection = document.createElementNS(SVG_NS, "line");
+    lineConnection.setAttribute("x1", `0`);
+    lineConnection.setAttribute("y1", `${LINE_CONNECTION_WIDTH/2}`);
+    lineConnection.setAttribute("x2", `${Math.abs(x2-x1)}`);
+    lineConnection.setAttribute("y2", `${LINE_CONNECTION_WIDTH/2}`);
+    lineConnection.setAttribute("stroke", `black`);
+    lineConnection.setAttribute("stroke-width", `${LINE_CONNECTION_WIDTH}`);
+    lineConnection.setAttribute("stroke-linecap", `round`);
+
+    connection.append(lineConnection);
+    workspaceFormat.append(connection);
+
+    connection.style.left = x1 + "px";
+    connection.style.top = y1 + "px";
+}
+// drawConnetion (50, 50, 100, 50);
 
 
 
