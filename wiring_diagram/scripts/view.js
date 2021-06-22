@@ -32,8 +32,9 @@ class ToolsViewSVG {
 
     this.tool = document.createElementNS(SVG_NS, "svg");
     this.tool.classList.add("svg_tool");
-    this.tool.dataset.type = typeTools + this.myModel.i;
-    this.myModel.i += 1;
+    this.tool.dataset.number = toolNumber;
+    toolNumber++;
+    // console.log(this.myModel.i++);
     this.tool.setAttribute("width", `${this.myModel.size}`);
     this.tool.setAttribute("height", `${this.myModel.size}`);
 
@@ -62,7 +63,7 @@ class ToolsViewSVG {
     this.tool.style.left = this.myModel.centerX-field.offsetLeft-field.parentNode.offsetLeft;
     this.tool.style.top = this.myModel.centerY-field.offsetTop-field.parentNode.offsetTop;
 
-    console.log("this.myModel.centerX: "+this.myModel.centerX, "field.offsetLeft: "+field.offsetLeft, "field.parentNode.offsetLeft: "+field.parentNode.offsetLeft, "scale: "+scale, "scaleShiftHeight: "+scaleShiftHeight, "scaleShiftWidth: "+scaleShiftWidth);
+    // console.log("this.myModel.centerX: "+this.myModel.centerX, "field.offsetLeft: "+field.offsetLeft, "field.parentNode.offsetLeft: "+field.parentNode.offsetLeft, "scale: "+scale, "scaleShiftHeight: "+scaleShiftHeight, "scaleShiftWidth: "+scaleShiftWidth);
 
   }
 }

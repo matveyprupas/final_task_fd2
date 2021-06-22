@@ -7,7 +7,7 @@ class Tools {
     constructor(x, y) {
         this.x = x;
         this.y = y;
-        this.i = 1;
+        this.i = 0;
 
         this.angle = 0;
 
@@ -19,21 +19,36 @@ class Tools {
 
     start(view) {
         this.myView = view;
-        this.contactsShift();
+        // this.contactsShift();
     }
     
     contactsShift() {
         this.shiftContacts = []; 
+        // let centerToolX = 
+        // console.log(parseFloat(this.myView.tool.style.left), this.centerX-workspace.offsetLeft-workspaceFormat.offsetLeft);
 
-        let shiftToolX = this.centerX - workspace.offsetLeft - workspaceFormat.offsetLeft;
-        let shiftToolY = this.centerY - workspace.offsetTop - workspaceFormat.offsetTop;
+        let shiftToolX = parseFloat(this.myView.tool.style.left);
+        let shiftToolY = parseFloat(this.myView.tool.style.top);
 
         for (let i = 0; i < this.contacts.length; i++) {
             let shiftContactX = shiftToolX + this.contacts[i].shiftX;
             let shiftContactY = shiftToolY + this.contacts[i].shiftY;
-            this.shiftContacts.push({shiftContactX: shiftContactX, shiftContactY: shiftContactY}); 
+            this.shiftContacts.push({shiftContactX: shiftContactX, shiftContactY: shiftContactY, connected: false}); 
         }
 
+        // console.log(this.shiftContacts);
+    }
+
+    addEmptyContacts() {
+        let res = [];
+        res.push(this);
+        // this.contactsShift();
+        this.shiftContacts.forEach((el)=> {
+            res.push(el);
+        });
+
+        emptyContacts.push(res);
+        // console.log(emptyContacts);
     }
 }
 
@@ -81,12 +96,14 @@ class Angle extends Tools {
             {
                 shiftX: DIODE_SIZE/20+4,
                 shiftY: DIODE_SIZE/20+2,
-                r: DIODE_SIZE/20
+                r: DIODE_SIZE/20,
+                connected: false
             },
             {
                 shiftX: DIODE_SIZE - (DIODE_SIZE/20+2),
                 shiftY: DIODE_SIZE - (DIODE_SIZE/20+5),
-                r: DIODE_SIZE/20
+                r: DIODE_SIZE/20,
+                connected: false
             }
         ]
     }
@@ -106,17 +123,20 @@ class Dot_3 extends Tools {
             {
                 shiftX: DIODE_SIZE/2-6,
                 shiftY: DIODE_SIZE/20+2,
-                r: DIODE_SIZE/20
+                r: DIODE_SIZE/20,
+                connected: false
             },
             {
                 shiftX: DIODE_SIZE - (DIODE_SIZE/20+5),
                 shiftY: DIODE_SIZE/2-2,
-                r: DIODE_SIZE/20
+                r: DIODE_SIZE/20,
+                connected: false
             },
             {
                 shiftX: DIODE_SIZE/2-6,
                 shiftY: DIODE_SIZE - (DIODE_SIZE/20+2),
-                r: DIODE_SIZE/20
+                r: DIODE_SIZE/20,
+                connected: false
             }
         ]
     }
@@ -136,22 +156,26 @@ class Dot_4 extends Tools {
             {
                 shiftX: DIODE_SIZE/2,
                 shiftY: DIODE_SIZE/20+1,
-                r: DIODE_SIZE/20
+                r: DIODE_SIZE/20,
+                connected: false
             },
             {
                 shiftX: DIODE_SIZE - (DIODE_SIZE/20+3),
                 shiftY: DIODE_SIZE/2-2,
-                r: DIODE_SIZE/20
+                r: DIODE_SIZE/20,
+                connected: false
             },
             {
                 shiftX: DIODE_SIZE/2,
                 shiftY: DIODE_SIZE - (DIODE_SIZE/20+1),
-                r: DIODE_SIZE/20
+                r: DIODE_SIZE/20,
+                connected: false
             },
             {
                 shiftX: DIODE_SIZE/20+1,
                 shiftY: DIODE_SIZE/2-2,
-                r: DIODE_SIZE/20
+                r: DIODE_SIZE/20,
+                connected: false
             }
         ]
     }
@@ -171,12 +195,14 @@ class Generator extends Tools {
             {
                 shiftX: DIODE_SIZE/20,
                 shiftY: this.size/2,
-                r: DIODE_SIZE/20
+                r: DIODE_SIZE/20,
+                connected: false
             },
             {
                 shiftX: DIODE_SIZE - DIODE_SIZE/20,
                 shiftY: this.size/2,
-                r: DIODE_SIZE/20
+                r: DIODE_SIZE/20,
+                connected: false
             }
         ]
     }
@@ -198,23 +224,8 @@ class Generator extends Tools {
 
 
 
-// Create workspace model
+// all tools placed on workspace
 
-class Workspace {
-    constructor(format) {
-        this.format = format;
-
-        this.y = y;
-
-        this.angle = 0;
-
-        this.id = 0;
-
-        this.type = "test";
-
-      }
-
-    start(view) {
-        this.myView = view;    
-    }
-}
+let allToolsOnWorkspace = [];
+let emptyContacts = [];
+let toolNumber = 0;
